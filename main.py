@@ -1,9 +1,19 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 import joblib
 from pydantic import BaseModel
 
 app = FastAPI()
+
+# ✅ Enable CORS to allow requests from Flutter
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows requests from any frontend (change to specific origin in production)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Load the trained model
 model = joblib.load("fall_detection_model.pkl")
